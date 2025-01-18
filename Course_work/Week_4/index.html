@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<br lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            background-color: red;
+            font-size: 100px;
+            padding: 20;
+            margin: 100;
+            color: green;
+        }
+    </style>
+</head>
+<script>
+    let timeOut;
+
+    function debouncePopulateDivSum(){
+        clearTimeout(timeOut);
+        timeOut = setTimeout(() => {
+            populateDivSum()
+        }, 2000)
+    }
+
+    function populateDivSum(){
+        const finalSumAmount = document.getElementById("finalSumAmount")
+        const finalSumIntrest = document.getElementById("finalSumIntrest")
+        const principle = document.getElementById("principle").value
+        const interest = document.getElementById("interest").value
+        const time = document.getElementById("time").value
+        console.log("hey")
+        const fetchAns = fetch("https://sum-server.100xdevs.com/interest?principal="+ principle +"&rate="+ interest+"&time="+ time)
+            .then((response) => {
+                console.log(response)
+                response.json()
+                    .then((ans) => {
+                        console.log(ans)
+                        finalSumAmount.innerHTML = "Total amount after "+time+" years is: "+ans.total;
+                        finalSumIntrest.innerHTML = "Total intrest after "+time+" years on "+principle+" amount is: "+ans.interest;
+                    })
+            })
+    }
+
+</script>
+<body>
+
+<input oninput="debouncePopulateDivSum()" id="principle" type="text" placeholder="Principle Amount "></input> </br> </br>
+<input oninput="debouncePopulateDivSum()" id="interest" type="text" placeholder="Interest Rate"></input> </br> </br>
+<input oninput="debouncePopulateDivSum()" id="time" type="text" placeholder="Time (Years)"></input> </br> </br>
+<!-- <button onclick="populateDivSum()" > Calculate Final Amount </button> </br> </br> -->
+<div id="finalSumAmount"></div> </br>
+<div id="finalSumIntrest"></div>
+</body>
+
+</html>

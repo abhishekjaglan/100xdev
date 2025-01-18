@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    let globalId = 1;
+
+    function markAsDone(id){
+        const element = document.getElementById(id)
+        console.log(id)
+        console.log(element)
+        element.children[2].innerHTML = 'Done!'
+    }
+
+    function createChild(title, description, id){
+
+        const child = document.createElement('div')
+        const titleDiv = document.createElement('div')
+        titleDiv.innerHTML = title
+        const descriptionDiv = document.createElement('div')
+        descriptionDiv.innerHTML = description
+        const button = document.createElement('button')
+        button.innerHTML = 'Mark as Done'
+        button.setAttribute('onClick',`markAsDone(${id})`)
+        child.appendChild(titleDiv)
+        child.appendChild(descriptionDiv)
+        child.appendChild(button)
+        child.setAttribute('id',id)
+        return child
+    }
+
+    function toDo(){
+        const title = document.getElementById('title').value
+        const description = document.getElementById('description').value
+        const parent = document.getElementById("todoAdded")
+        
+        parent.appendChild(createChild(title, description, globalId++))
+    }
+</script>
+</body>
+    <br>
+        <input id="title" type="text" placeholder="Title"></input>
+        <br></br>
+        <input id="description" type="text" placeholder="Description"></input>
+        <br></br>
+        <button onclick="toDo()">Add To-Do</button>
+        <br></br>
+        <div id="todoAdded"></div>
+    </div>
+</body>
+</html>
